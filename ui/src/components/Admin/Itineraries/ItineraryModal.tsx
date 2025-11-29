@@ -64,7 +64,7 @@ export default function ItineraryModal({
   }, [itinerary, reset])
 
   const onSubmit = (data: ItineraryFormData) => {
-    onSave(data)
+    onSave(data as any)
   }
 
   return (
