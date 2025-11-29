@@ -45,6 +45,52 @@ app.use((req, res, next) => {
   next();
 });
 
+// ==================== ROOT ROUTE - API DOCUMENTATION ====================
+
+app.get('/', (req, res) => {
+  const documentation = {
+    message: '🚀 Sports Travel Platform API',
+    version: '1.0.0',
+    description: 'Premium Sports Travel Experiences & Management System',
+    timestamp: new Date().toISOString(),
+    endpoints: {
+      auth: {
+        'POST /auth/create-admin': 'Create admin user (first time setup)',
+        'POST /auth/login': 'Admin login',
+      },
+      public: {
+        'GET /health': 'API health check',
+        'GET /packages': 'Get all packages',
+        'GET /packages/featured': 'Get featured packages',
+        'GET /itineraries': 'Get all itineraries',
+        'GET /addons': 'Get all addons',
+        'POST /leads': 'Create/update lead',
+        'POST /ai/chat': 'Public AI chat',
+        'POST /analytics/events': 'Track analytics event',
+      },
+      admin: {
+        'GET /leads': 'Get all leads (admin)',
+        'PUT /leads/:id/status': 'Update lead status (admin)',
+        'GET /leads/export': 'Export leads to CSV (admin)',
+        'CRUD /packages': 'Manage packages (admin)',
+        'CRUD /itineraries': 'Manage itineraries (admin)',
+        'CRUD /addons': 'Manage addons (admin)',
+        'GET /analytics/summary': 'Get analytics summary (admin)',
+        'POST /ai/admin/chat': 'Admin AI chat (admin)',
+      }
+    },
+    quickStart: {
+      '1. Setup': 'POST /auth/create-admin to create admin user',
+      '2. Login': 'POST /auth/login with admin credentials',
+      '3. Explore': 'Use the endpoints above to manage the platform'
+    },
+    frontend: "https://sports-travel-platform-app.vercel.app",
+    adminPanel: "https://sports-travel-platform-app.vercel.app/admin"
+  };
+
+  res.json(documentation);
+});
+
 // ==================== HEALTH & TEST ROUTES ====================
 
 app.get('/health', (req, res) => {
