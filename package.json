@@ -11,9 +11,8 @@
     "db:studio": "npx prisma studio",
     "test": "cross-env NODE_ENV=test jest --runInBand --detectOpenHandles --verbose --forceExit",
     "test:watch": "cross-env NODE_ENV=test jest --watch --runInBand --forceExit",
-     "test:ai-comprehensive": "cross-env NODE_ENV=test jest --runInBand --testTimeout=20000 --forceExit tests/ai-comprehensive.test.js",
+    "test:ai-comprehensive": "cross-env NODE_ENV=test jest --runInBand --testTimeout=20000 --forceExit tests/ai-comprehensive.test.js",
     "test:ai-quick": "cross-env NODE_ENV=test jest --runInBand --testTimeout=10000 --forceExit tests/ai-comprehensive.test.js --testNamePattern=\"COMPREHENSIVE AI FLOW|LEAD AI CONVERSATIONS\""
-    
   },
   "jest": {
     "testEnvironment": "node",
@@ -27,6 +26,7 @@
   },
   "dependencies": {
     "@prisma/client": "^5.6.0",
+    "axios": "^1.13.2",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.6.1",
