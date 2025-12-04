@@ -1,0 +1,43 @@
+backend/
+├── prisma/
+│   ├── schema.prisma
+│   └── migrations/
+├── src/
+│   ├── config/
+│   │   └── index.js
+│   ├── middleware/
+│   │   ├── auth.js
+│   │   ├── validation.js
+│   │   └── rateLimit.js
+│   ├── controllers/
+│   │   ├── leadController.js
+│   │   ├── eventController.js
+│   │   ├── packageController.js
+│   │   ├── quoteController.js
+│   │   └── analyticsController.js
+│   ├── services/
+│   │   ├── leadService.js
+│   │   ├── eventService.js
+│   │   ├── quoteService.js
+│   │   ├── emailService.js
+│   │   └── pricingService.js
+│   ├── routes/
+│   │   ├── leadRoutes.js
+│   │   ├── eventRoutes.js
+│   │   ├── quoteRoutes.js
+│   │   └── adminRoutes.js
+│   ├── utils/
+│   │   ├── database.js
+│   │   ├── validators.js
+│   │   ├── logger.js
+│   │   └── helpers.js
+│   ├── app.js
+│   └── index.js
+├── tests/
+│   ├── unit/
+│   └── integration/
+├── .env
+├── .gitignore
+├── package.json
+├── README.md
+└── docker-compose.yml
