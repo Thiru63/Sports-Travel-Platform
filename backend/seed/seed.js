@@ -1,8 +1,14 @@
 // seed/seed.js
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api"; // change if needed
-
+const API_URL = "http://localhost:3000/api"; // change if needed
+const authToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJmZTNmMGFlYi0yZmI1LTRkZDgtYThiOS0yZDdmZTdiYjMzZGMiLCJlbWFpbCI6ImFkbWluQHNwb3J0cy5jb20iLCJuYW1lIjoiQWRtaW4gVXNlciIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc2NDg5NDM2NywiZXhwIjoxNzY0OTgwNzY3fQ.IaLoYdlr2uWWnFKK5Tvo7C2VD6cd6g2fJ1Hdns5kK4Y"
+const config = {
+  headers: {
+    'Authorization': `Bearer ${authToken}`,
+    'Content-Type': 'application/json' // Often good practice to explicitly set this too
+  }
+};
 async function runSeed() {
   try {
     console.log("🚀 Starting seed script...\n");
@@ -63,7 +69,7 @@ async function runSeed() {
     const eventIds = [];
 
     for (const event of eventsPayload) {
-      const res = await axios.post(`${API_URL}/events`, event);
+      const res = await axios.post(`${API_URL}/events`, event,config);
       eventIds.push(res.data.data.id);
       console.log("✔ Created Event:", res.data.data.title);
     }
@@ -138,7 +144,7 @@ async function runSeed() {
     for (const eventId of eventIds) {
       const pkgs = packagesTemplate(eventId);
       for (const pkg of pkgs) {
-        await axios.post(`${API_URL}/packages`, pkg);
+        await axios.post(`${API_URL}/packages`, pkg,config);
       }
       console.log(`✔ Packages added for event: ${eventId}`);
     }
@@ -194,7 +200,7 @@ async function runSeed() {
     ];
 
     for (const it of itineraries) {
-      await axios.post(`${API_URL}/itineraries`, it);
+      await axios.post(`${API_URL}/itineraries`, it,config);
     }
 
     console.log("✔ 5 Itineraries created!");
@@ -237,7 +243,7 @@ async function runSeed() {
       }
     ];
 
-    for (const addon of addons) await axios.post(`${API_URL}/addons`, addon);
+    for (const addon of addons) await axios.post(`${API_URL}/addons`, addon,config);
 
     console.log("✔ 5 Addons created!");
 

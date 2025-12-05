@@ -811,3 +811,72 @@
 {"level":"warn","message":"⚠️ Skipping prisma.$connect() in test environment","service":"sports-travel-api","timestamp":"2025-12-04T23:38:47.423Z"}
 {"level":"warn","message":"⚠️ Skipping prisma.$connect() in test environment","service":"sports-travel-api","timestamp":"2025-12-04T23:39:22.124Z"}
 {"level":"info","message":"Database connection closed","service":"sports-travel-api","timestamp":"2025-12-04T23:46:45.457Z"}
+{"level":"warn","message":"⚠️ Skipping prisma.$connect() in test environment","service":"sports-travel-api","timestamp":"2025-12-05T00:24:46.561Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [05/Dec/2025:00:25:29 +0000] \"POST /api/events HTTP/1.1\" 403 53 \"-\" \"axios/1.13.2\"","service":"sports-travel-api","timestamp":"2025-12-05T00:25:29.523Z"}
+{"level":"info","message":"Admin user created: fe3f0aeb-2fb5-4dd8-a8b9-2d7fe7bb33dc","service":"sports-travel-api","timestamp":"2025-12-05T00:25:59.201Z"}
+{"level":"info","message":"::1 - - [05/Dec/2025:00:25:59 +0000] \"POST /api/admin/create HTTP/1.1\" 201 175 \"-\" \"PostmanRuntime/7.49.1\"","service":"sports-travel-api","timestamp":"2025-12-05T00:25:59.208Z"}
+{"level":"info","message":"::1 - - [05/Dec/2025:00:26:07 +0000] \"POST /api/admin/login HTTP/1.1\" 200 452 \"-\" \"PostmanRuntime/7.49.1\"","service":"sports-travel-api","timestamp":"2025-12-05T00:26:07.580Z"}
+{"level":"warn","message":"⚠️ Skipping prisma.$connect() in test environment","service":"sports-travel-api","timestamp":"2025-12-05T00:26:42.685Z"}
+{"level":"info","message":"Event created: 29e115f0-c0cc-4e9e-873a-f436c76180f9 by admin@sports.com","service":"sports-travel-api","timestamp":"2025-12-05T00:26:51.222Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [05/Dec/2025:00:26:51 +0000] \"POST /api/events HTTP/1.1\" 201 729 \"-\" \"axios/1.13.2\"","service":"sports-travel-api","timestamp":"2025-12-05T00:26:51.249Z"}
+{"level":"info","message":"Event created: 90d669d7-4866-4d61-b7b3-25c60fb8a15e by admin@sports.com","service":"sports-travel-api","timestamp":"2025-12-05T00:26:52.295Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [05/Dec/2025:00:26:52 +0000] \"POST /api/events HTTP/1.1\" 201 688 \"-\" \"axios/1.13.2\"","service":"sports-travel-api","timestamp":"2025-12-05T00:26:52.299Z"}
+{"level":"info","message":"Event created: 29a7f4a3-e14b-4083-b3ca-13adadccb7b2 by admin@sports.com","service":"sports-travel-api","timestamp":"2025-12-05T00:26:53.672Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [05/Dec/2025:00:26:53 +0000] \"POST /api/events HTTP/1.1\" 201 696 \"-\" \"axios/1.13.2\"","service":"sports-travel-api","timestamp":"2025-12-05T00:26:53.679Z"}
+{"level":"info","message":"Package created: 09ecc79c-ce89-49be-be3f-8c12a1fc939f by admin@sports.com","service":"sports-travel-api","timestamp":"2025-12-05T00:26:58.593Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [05/Dec/2025:00:26:58 +0000] \"POST /api/packages HTTP/1.1\" 201 - \"-\" \"axios/1.13.2\"","service":"sports-travel-api","timestamp":"2025-12-05T00:26:58.603Z"}
+{"level":"info","message":"Package created: 8f25c762-b0c3-4c92-9cdc-1393083bd94f by admin@sports.com","service":"sports-travel-api","timestamp":"2025-12-05T00:27:03.304Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [05/Dec/2025:00:27:03 +0000] \"POST /api/packages HTTP/1.1\" 201 - \"-\" \"axios/1.13.2\"","service":"sports-travel-api","timestamp":"2025-12-05T00:27:03.313Z"}
+{"level":"info","message":"Package created: 5f3a0df3-28ff-434f-97b7-f236a9fbe8b7 by admin@sports.com","service":"sports-travel-api","timestamp":"2025-12-05T00:27:06.991Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [05/Dec/2025:00:27:06 +0000] \"POST /api/packages HTTP/1.1\" 201 - \"-\" \"axios/1.13.2\"","service":"sports-travel-api","timestamp":"2025-12-05T00:27:06.997Z"}
+{"level":"info","message":"Package created: d5b4dda2-7604-4436-86bc-eb4e118c11ac by admin@sports.com","service":"sports-travel-api","timestamp":"2025-12-05T00:27:11.291Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [05/Dec/2025:00:27:11 +0000] \"POST /api/packages HTTP/1.1\" 201 - \"-\" \"axios/1.13.2\"","service":"sports-travel-api","timestamp":"2025-12-05T00:27:11.298Z"}
+{"level":"info","message":"Package created: 8c709367-4b72-48ee-97cf-1dbf49d85363 by admin@sports.com","service":"sports-travel-api","timestamp":"2025-12-05T00:27:14.364Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [05/Dec/2025:00:27:14 +0000] \"POST /api/packages HTTP/1.1\" 201 - \"-\" \"axios/1.13.2\"","service":"sports-travel-api","timestamp":"2025-12-05T00:27:14.379Z"}
+{"level":"info","message":"Package created: f4f01626-4fbb-4587-8dbd-2e77d227f2ea by admin@sports.com","service":"sports-travel-api","timestamp":"2025-12-05T00:27:17.844Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [05/Dec/2025:00:27:17 +0000] \"POST /api/packages HTTP/1.1\" 201 - \"-\" \"axios/1.13.2\"","service":"sports-travel-api","timestamp":"2025-12-05T00:27:17.857Z"}
+{"level":"info","message":"Package created: c48c44d4-6abd-4e33-87af-f2519c887cc5 by admin@sports.com","service":"sports-travel-api","timestamp":"2025-12-05T00:27:21.121Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [05/Dec/2025:00:27:21 +0000] \"POST /api/packages HTTP/1.1\" 201 - \"-\" \"axios/1.13.2\"","service":"sports-travel-api","timestamp":"2025-12-05T00:27:21.127Z"}
+{"level":"info","message":"Package created: abc91210-eca8-4f17-841a-3b422c4a2b3c by admin@sports.com","service":"sports-travel-api","timestamp":"2025-12-05T00:27:25.012Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [05/Dec/2025:00:27:25 +0000] \"POST /api/packages HTTP/1.1\" 201 - \"-\" \"axios/1.13.2\"","service":"sports-travel-api","timestamp":"2025-12-05T00:27:25.019Z"}
+{"level":"info","message":"Package created: 16b14db1-9a2d-4a50-bfc6-0a6ca21fe33d by admin@sports.com","service":"sports-travel-api","timestamp":"2025-12-05T00:27:28.494Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [05/Dec/2025:00:27:28 +0000] \"POST /api/packages HTTP/1.1\" 201 - \"-\" \"axios/1.13.2\"","service":"sports-travel-api","timestamp":"2025-12-05T00:27:28.501Z"}
+{"level":"info","message":"Package created: 734f074b-f08e-4222-a4d0-b429c3add058 by admin@sports.com","service":"sports-travel-api","timestamp":"2025-12-05T00:27:31.771Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [05/Dec/2025:00:27:31 +0000] \"POST /api/packages HTTP/1.1\" 201 - \"-\" \"axios/1.13.2\"","service":"sports-travel-api","timestamp":"2025-12-05T00:27:31.781Z"}
+{"level":"info","message":"Package created: 4708e561-9bc6-4522-890c-62ab99a7e58f by admin@sports.com","service":"sports-travel-api","timestamp":"2025-12-05T00:27:35.252Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [05/Dec/2025:00:27:35 +0000] \"POST /api/packages HTTP/1.1\" 201 - \"-\" \"axios/1.13.2\"","service":"sports-travel-api","timestamp":"2025-12-05T00:27:35.258Z"}
+{"level":"info","message":"Package created: 5d7f27ba-c7ae-4c06-98e0-e658a230ef52 by admin@sports.com","service":"sports-travel-api","timestamp":"2025-12-05T00:27:39.143Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [05/Dec/2025:00:27:39 +0000] \"POST /api/packages HTTP/1.1\" 201 - \"-\" \"axios/1.13.2\"","service":"sports-travel-api","timestamp":"2025-12-05T00:27:39.150Z"}
+{"level":"info","message":"Package created: 14bfc965-3fc8-4933-a38f-26954208ba52 by admin@sports.com","service":"sports-travel-api","timestamp":"2025-12-05T00:27:42.830Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [05/Dec/2025:00:27:42 +0000] \"POST /api/packages HTTP/1.1\" 201 - \"-\" \"axios/1.13.2\"","service":"sports-travel-api","timestamp":"2025-12-05T00:27:42.836Z"}
+{"level":"info","message":"Package created: e4bcc374-2aa9-4e6c-8b66-86848358e919 by admin@sports.com","service":"sports-travel-api","timestamp":"2025-12-05T00:27:45.902Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [05/Dec/2025:00:27:45 +0000] \"POST /api/packages HTTP/1.1\" 201 - \"-\" \"axios/1.13.2\"","service":"sports-travel-api","timestamp":"2025-12-05T00:27:45.907Z"}
+{"level":"info","message":"Package created: 8fea48ee-57a5-47b0-993f-aa1073041d97 by admin@sports.com","service":"sports-travel-api","timestamp":"2025-12-05T00:27:49.588Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [05/Dec/2025:00:27:49 +0000] \"POST /api/packages HTTP/1.1\" 201 - \"-\" \"axios/1.13.2\"","service":"sports-travel-api","timestamp":"2025-12-05T00:27:49.594Z"}
+{"level":"info","message":"Package created: 1d19583d-6070-4390-a8c5-2b3e41589b14 by admin@sports.com","service":"sports-travel-api","timestamp":"2025-12-05T00:27:52.252Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [05/Dec/2025:00:27:52 +0000] \"POST /api/packages HTTP/1.1\" 201 - \"-\" \"axios/1.13.2\"","service":"sports-travel-api","timestamp":"2025-12-05T00:27:52.258Z"}
+{"level":"info","message":"Package created: dbb412da-3100-4ce8-8b80-d38136998d27 by admin@sports.com","service":"sports-travel-api","timestamp":"2025-12-05T00:27:56.756Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [05/Dec/2025:00:27:56 +0000] \"POST /api/packages HTTP/1.1\" 201 - \"-\" \"axios/1.13.2\"","service":"sports-travel-api","timestamp":"2025-12-05T00:27:56.762Z"}
+{"level":"info","message":"Package created: a0c84fb3-1ce5-4b21-95f5-0f199b36575c by admin@sports.com","service":"sports-travel-api","timestamp":"2025-12-05T00:28:00.852Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [05/Dec/2025:00:28:00 +0000] \"POST /api/packages HTTP/1.1\" 201 - \"-\" \"axios/1.13.2\"","service":"sports-travel-api","timestamp":"2025-12-05T00:28:00.857Z"}
+{"level":"info","message":"Itinerary created: 3deb4efa-ac81-47b7-bebf-0e0a09e0b14a by admin@sports.com","service":"sports-travel-api","timestamp":"2025-12-05T00:28:03.589Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [05/Dec/2025:00:28:03 +0000] \"POST /api/itineraries HTTP/1.1\" 201 466 \"-\" \"axios/1.13.2\"","service":"sports-travel-api","timestamp":"2025-12-05T00:28:03.594Z"}
+{"level":"info","message":"Itinerary created: df9da363-01bb-4807-b45d-2b077e8eb306 by admin@sports.com","service":"sports-travel-api","timestamp":"2025-12-05T00:28:05.219Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [05/Dec/2025:00:28:05 +0000] \"POST /api/itineraries HTTP/1.1\" 201 467 \"-\" \"axios/1.13.2\"","service":"sports-travel-api","timestamp":"2025-12-05T00:28:05.223Z"}
+{"level":"info","message":"Itinerary created: 6305e243-2d24-4f1c-a514-791c2a866700 by admin@sports.com","service":"sports-travel-api","timestamp":"2025-12-05T00:28:07.405Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [05/Dec/2025:00:28:07 +0000] \"POST /api/itineraries HTTP/1.1\" 201 437 \"-\" \"axios/1.13.2\"","service":"sports-travel-api","timestamp":"2025-12-05T00:28:07.410Z"}
+{"level":"info","message":"Itinerary created: d35cbcee-559c-4774-bab6-ddf612e06f96 by admin@sports.com","service":"sports-travel-api","timestamp":"2025-12-05T00:28:09.658Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [05/Dec/2025:00:28:09 +0000] \"POST /api/itineraries HTTP/1.1\" 201 446 \"-\" \"axios/1.13.2\"","service":"sports-travel-api","timestamp":"2025-12-05T00:28:09.660Z"}
+{"level":"info","message":"Itinerary created: 0155d60a-bc78-4321-9188-2ccc278116a7 by admin@sports.com","service":"sports-travel-api","timestamp":"2025-12-05T00:28:11.706Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [05/Dec/2025:00:28:11 +0000] \"POST /api/itineraries HTTP/1.1\" 201 444 \"-\" \"axios/1.13.2\"","service":"sports-travel-api","timestamp":"2025-12-05T00:28:11.710Z"}
+{"level":"info","message":"Addon created: c3d919b3-389b-4b53-897a-53976f70cb87 by admin@sports.com","service":"sports-travel-api","timestamp":"2025-12-05T00:28:14.983Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [05/Dec/2025:00:28:14 +0000] \"POST /api/addons HTTP/1.1\" 201 402 \"-\" \"axios/1.13.2\"","service":"sports-travel-api","timestamp":"2025-12-05T00:28:14.986Z"}
+{"level":"info","message":"Addon created: 01802f32-cc9e-4034-bbb3-da1378daefea by admin@sports.com","service":"sports-travel-api","timestamp":"2025-12-05T00:28:18.055Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [05/Dec/2025:00:28:18 +0000] \"POST /api/addons HTTP/1.1\" 201 398 \"-\" \"axios/1.13.2\"","service":"sports-travel-api","timestamp":"2025-12-05T00:28:18.059Z"}
+{"level":"info","message":"Addon created: e2a29242-f0b0-4ed9-9d38-17003d15984d by admin@sports.com","service":"sports-travel-api","timestamp":"2025-12-05T00:28:20.717Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [05/Dec/2025:00:28:20 +0000] \"POST /api/addons HTTP/1.1\" 201 399 \"-\" \"axios/1.13.2\"","service":"sports-travel-api","timestamp":"2025-12-05T00:28:20.721Z"}
+{"level":"info","message":"Addon created: 2c249e0c-c5d2-4426-bd63-5b2d37b795a4 by admin@sports.com","service":"sports-travel-api","timestamp":"2025-12-05T00:28:23.175Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [05/Dec/2025:00:28:23 +0000] \"POST /api/addons HTTP/1.1\" 201 406 \"-\" \"axios/1.13.2\"","service":"sports-travel-api","timestamp":"2025-12-05T00:28:23.178Z"}
+{"level":"info","message":"Addon created: aafd4f2f-c17b-428f-a68c-f7b601399055 by admin@sports.com","service":"sports-travel-api","timestamp":"2025-12-05T00:28:25.427Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [05/Dec/2025:00:28:25 +0000] \"POST /api/addons HTTP/1.1\" 201 400 \"-\" \"axios/1.13.2\"","service":"sports-travel-api","timestamp":"2025-12-05T00:28:25.429Z"}
+{"level":"info","message":"Database connection closed","service":"sports-travel-api","timestamp":"2025-12-05T00:30:08.040Z"}
