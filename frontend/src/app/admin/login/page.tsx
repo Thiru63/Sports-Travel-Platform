@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { LogIn, Lock, Mail, AlertCircle } from 'lucide-react'
+import { LogIn, Lock, Mail, AlertCircle, ArrowLeft } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
@@ -44,16 +45,24 @@ export default function AdminLoginPage() {
 
     try {
       const response = await authAPI.login(data.email, data.password)
+      console.log('Login response:', response)
       
-      if (response.access_token && response.admin) {
-        login(response.admin, response.access_token)
-        toast.success('Login successful!')
-        router.push('/admin')
+      // Backend returns: { success: true, data: { token, admin }, message }
+      if (response.success && response.data) {
+        const { token, admin } = response.data
+        if (token && admin) {
+          login(admin, token)
+          toast.success('Login successful!')
+          router.push('/admin')
+        } else {
+          throw new Error('Invalid response structure from server')
+        }
       } else {
-        throw new Error('Invalid response from server')
+        throw new Error(response.error || 'Invalid response from server')
       }
     } catch (error: any) {
-      const errorMessage = error.response?.data?.error || error.message || 'Login failed'
+      console.error('Login error:', error)
+      const errorMessage = error.response?.data?.error || error.response?.data?.message || error.message || 'Login failed'
       setError(errorMessage)
       toast.error(errorMessage)
     } finally {
@@ -62,14 +71,23 @@ export default function AdminLoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-primary flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-primary flex items-center justify-center p-4 relative">
+      {/* Back Button */}
+      <Link
+        href="/"
+        className="absolute top-4 left-4 md:top-6 md:left-6 inline-flex items-center text-white hover:text-gray-200 transition-colors bg-white/10 hover:bg-white/20 px-4 py-2 rounded-lg backdrop-blur-sm"
+      >
+        <ArrowLeft size={20} className="mr-2" />
+        <span>Back to Home</span>
+      </Link>
+
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5 }}
         className="w-full max-w-md"
       >
-        <div className="bg-white rounded-2xl shadow-2xl p-8">
+        <div className="bg-white rounded-2xl shadow-2xl p-6 md:p-8">
           {/* Header */}
           <div className="text-center mb-8">
             <motion.div

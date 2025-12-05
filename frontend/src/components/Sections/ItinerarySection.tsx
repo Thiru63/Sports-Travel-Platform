@@ -12,17 +12,26 @@ export default function ItinerarySection() {
   const [itineraries, setItineraries] = useState<Itinerary[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [showLeadForm, setShowLeadForm] = useState(false)
+  const [selectedItinerary, setSelectedItinerary] = useState<Itinerary | null>(null)
   const scrollRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const fetchItineraries = async () => {
       try {
+        setIsLoading(true)
+        // Fetch itineraries - can optionally filter by eventId
         const response = await itinerariesAPI.getAll()
+        console.log('Itineraries API response:', response)
         if (response.success) {
-          setItineraries(response.data)
+          setItineraries(response.data || [])
+        } else {
+          console.warn('No itineraries found or invalid response:', response)
+          setItineraries([])
         }
-      } catch (error) {
+      } catch (error: any) {
         console.error('Error fetching itineraries:', error)
+        console.error('Error details:', error.response?.data || error.message)
+        setItineraries([])
       } finally {
         setIsLoading(false)
       }
@@ -48,6 +57,7 @@ export default function ItinerarySection() {
       element: 'itinerary_card',
       itineraryId: itinerary.id,
     })
+    setSelectedItinerary(itinerary)
     setShowLeadForm(true)
   }
 
@@ -145,17 +155,23 @@ export default function ItinerarySection() {
                   <h3 className="text-xl font-bold mb-2 text-gray-900">{itinerary.title}</h3>
                   <p className="text-gray-600 text-sm mb-4 line-clamp-3">{itinerary.description}</p>
                   
-                  {itinerary.duration && (
+                  {(itinerary.duration || itinerary.dayNumber) && (
                     <div className="flex items-center text-sm text-gray-500 mb-4">
                       <Calendar className="mr-2" size={16} />
-                      <span>{itinerary.duration} days</span>
+                      <span>
+                        {itinerary.dayNumber ? `Day ${itinerary.dayNumber}` : ''}
+                        {itinerary.dayNumber && itinerary.duration ? ' • ' : ''}
+                        {itinerary.duration ? `${itinerary.duration} days` : ''}
+                      </span>
                     </div>
                   )}
 
                   <div className="flex items-center justify-between">
-                    <span className="text-2xl font-bold text-primary-600">
-                      {formatPrice(itinerary.basePrice)}
-                    </span>
+                    {itinerary.basePrice > 0 && (
+                      <span className="text-2xl font-bold text-primary-600">
+                        {formatPrice(itinerary.basePrice)}
+                      </span>
+                    )}
                     <button className="btn-primary text-sm">
                       View Details
                     </button>
@@ -173,7 +189,14 @@ export default function ItinerarySection() {
         </div>
       </div>
 
-      <LeadFormModal isOpen={showLeadForm} onClose={() => setShowLeadForm(false)} />
+      <LeadFormModal 
+        isOpen={showLeadForm} 
+        onClose={() => {
+          setShowLeadForm(false)
+          setSelectedItinerary(null)
+        }}
+        preselectedEventId={selectedItinerary?.eventId}
+      />
     </section>
   )
 }

@@ -12,16 +12,25 @@ export default function AddOnsSection() {
   const [addons, setAddons] = useState<AddOn[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [showLeadForm, setShowLeadForm] = useState(false)
+  const [selectedAddon, setSelectedAddon] = useState<AddOn | null>(null)
 
   useEffect(() => {
     const fetchAddons = async () => {
       try {
+        setIsLoading(true)
+        // Fetch addons - can optionally filter by eventId
         const response = await addonsAPI.getAll()
+        console.log('Addons API response:', response)
         if (response.success) {
-          setAddons(response.data)
+          setAddons(response.data || [])
+        } else {
+          console.warn('No addons found or invalid response:', response)
+          setAddons([])
         }
-      } catch (error) {
+      } catch (error: any) {
         console.error('Error fetching addons:', error)
+        console.error('Error details:', error.response?.data || error.message)
+        setAddons([])
       } finally {
         setIsLoading(false)
       }
@@ -36,6 +45,7 @@ export default function AddOnsSection() {
       section: 'addons',
       element: 'addon_card',
     })
+    setSelectedAddon(addon)
     setShowLeadForm(true)
   }
 
@@ -126,7 +136,7 @@ export default function AddOnsSection() {
 
                 <div className="flex items-center justify-between">
                   <span className="text-xl font-bold text-primary-600">
-                    {formatPrice(addon.basePrice)}
+                    {formatPrice(addon.price || addon.basePrice)}
                   </span>
                   <ArrowRight className="text-primary-600 group-hover:translate-x-1 transition-transform" />
                 </div>
@@ -142,7 +152,14 @@ export default function AddOnsSection() {
         )}
       </div>
 
-      <LeadFormModal isOpen={showLeadForm} onClose={() => setShowLeadForm(false)} />
+      <LeadFormModal 
+        isOpen={showLeadForm} 
+        onClose={() => {
+          setShowLeadForm(false)
+          setSelectedAddon(null)
+        }}
+        preselectedEventId={selectedAddon?.eventId}
+      />
     </section>
   )
 }

@@ -18,6 +18,7 @@ export default function AIChatWidget() {
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [isLoadingHistory, setIsLoadingHistory] = useState(false)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const { currentLead, updateLead } = useLeadStore()
 
@@ -28,6 +29,41 @@ export default function AIChatWidget() {
   useEffect(() => {
     scrollToBottom()
   }, [messages])
+
+  // Load chat history when widget opens
+  useEffect(() => {
+    if (isOpen && messages.length === 0) {
+      loadChatHistory()
+    }
+  }, [isOpen])
+
+  const loadChatHistory = async () => {
+    setIsLoadingHistory(true)
+    try {
+      const response = await aiAPI.getChatHistory()
+      if (response.success && response.data && response.data.conversations) {
+        const historyMessages: Message[] = []
+        response.data.conversations.forEach((conv: any) => {
+          historyMessages.push({
+            role: 'user',
+            content: conv.userMessage,
+            timestamp: new Date(conv.createdAt),
+          })
+          historyMessages.push({
+            role: 'ai',
+            content: conv.aiMessage,
+            timestamp: new Date(conv.createdAt),
+          })
+        })
+        setMessages(historyMessages)
+      }
+    } catch (error) {
+      console.error('Error loading chat history:', error)
+      // Don't show error to user, just start fresh
+    } finally {
+      setIsLoadingHistory(false)
+    }
+  }
 
   const handleSend = async () => {
     if (!input.trim() || isLoading) return
@@ -109,7 +145,17 @@ export default function AIChatWidget() {
 
             {/* Messages */}
             <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
-              {messages.length === 0 && (
+              {isLoadingHistory && (
+                <div className="text-center text-gray-500 mt-8">
+                  <div className="flex space-x-1 justify-center">
+                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" />
+                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
+                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
+                  </div>
+                  <p className="text-sm mt-2">Loading chat history...</p>
+                </div>
+              )}
+              {!isLoadingHistory && messages.length === 0 && (
                 <div className="text-center text-gray-500 mt-8">
                   <Bot size={48} className="mx-auto mb-4 text-primary-400" />
                   <p>Hello! I'm your AI travel assistant.</p>

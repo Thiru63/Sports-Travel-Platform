@@ -3,34 +3,76 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Calendar, MapPin, ArrowRight } from 'lucide-react'
-import { packagesAPI, analyticsAPI } from '@/lib/api'
-import { Package } from '@/lib/api'
+import { packagesAPI, eventsAPI, analyticsAPI } from '@/lib/api'
+import { Package, Event } from '@/lib/api'
 import LeadFormModal from '../Modals/LeadFormModal'
 import Image from 'next/image'
 
 export default function TopPackagesSection() {
   const [packages, setPackages] = useState<Package[]>([])
+  const [currentEvent, setCurrentEvent] = useState<Event | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [selectedPackage, setSelectedPackage] = useState<Package | null>(null)
   const [showLeadForm, setShowLeadForm] = useState(false)
 
+  // Fetch the first featured event
   useEffect(() => {
-    const fetchPackages = async () => {
+    const fetchFeaturedEvent = async () => {
       try {
-        const response = await packagesAPI.getAll()
-        if (response.success) {
-          // Get top 4 packages (excluding featured)
-          const topPackages = response.data.slice(0, 4)
-          setPackages(topPackages)
+        const response = await eventsAPI.getAll({ active: 'true', upcoming: 'true' })
+        if (response.success && response.data && response.data.length > 0) {
+          setCurrentEvent(response.data[0])
         }
       } catch (error) {
-        console.error('Error fetching packages:', error)
-      } finally {
-        setIsLoading(false)
+        console.error('Error fetching featured event:', error)
       }
     }
 
-    fetchPackages()
+    fetchFeaturedEvent()
+  }, [])
+
+  // Fetch packages when event changes
+  useEffect(() => {
+    if (currentEvent) {
+      fetchPackages(currentEvent.id)
+    }
+  }, [currentEvent])
+
+  const fetchPackages = async (eventId: string) => {
+    setIsLoading(true)
+    try {
+      const response = await packagesAPI.getAll({ eventId })
+      console.log('Packages API response:', response)
+      if (response.success && response.data) {
+        // Get top 4 packages
+        const topPackages = response.data.slice(0, 4)
+        setPackages(topPackages)
+      } else {
+        console.warn('No packages found or invalid response:', response)
+        setPackages([])
+      }
+    } catch (error: any) {
+      console.error('Error fetching packages:', error)
+      console.error('Error details:', error.response?.data || error.message)
+      setPackages([])
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  // Listen for event changes from FeaturedEventSection via custom event
+  useEffect(() => {
+    const handleEventChange = (event: CustomEvent) => {
+      if (event.detail && event.detail.eventId) {
+        // Fetch packages for the new event
+        fetchPackages(event.detail.eventId)
+      }
+    }
+
+    window.addEventListener('featuredEventChanged', handleEventChange as EventListener)
+    return () => {
+      window.removeEventListener('featuredEventChanged', handleEventChange as EventListener)
+    }
   }, [])
 
   const handlePackageClick = async (pkg: Package) => {
@@ -161,7 +203,11 @@ export default function TopPackagesSection() {
         )}
       </div>
 
-      <LeadFormModal isOpen={showLeadForm} onClose={() => setShowLeadForm(false)} />
+      <LeadFormModal 
+        isOpen={showLeadForm} 
+        onClose={() => setShowLeadForm(false)}
+        preselectedEventId={selectedPackage?.eventId || currentEvent?.id}
+      />
     </section>
   )
 }

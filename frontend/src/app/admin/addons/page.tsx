@@ -23,11 +23,18 @@ export default function AddonsPage() {
     setIsLoading(true)
     try {
       const response = await addonsAPI.getAll()
+      console.log('Admin Addons API response:', response)
       if (response.success) {
-        setAddons(response.data)
+        setAddons(response.data || [])
+      } else {
+        console.warn('No addons found or invalid response:', response)
+        setAddons([])
       }
     } catch (error: any) {
-      toast.error(error.message || 'Failed to fetch addons')
+      console.error('Error fetching addons:', error)
+      console.error('Error details:', error.response?.data || error.message)
+      toast.error(error.response?.data?.error || error.message || 'Failed to fetch addons')
+      setAddons([])
     } finally {
       setIsLoading(false)
     }
@@ -77,17 +84,17 @@ export default function AddonsPage() {
   )
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 md:space-y-6">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="flex items-center justify-between"
+        className="flex flex-col md:flex-row md:items-center md:justify-between gap-4"
       >
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Addons Management</h1>
-          <p className="text-gray-600">Create and manage VIP add-ons and experiences</p>
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Addons Management</h1>
+          <p className="text-sm md:text-base text-gray-600">Create and manage VIP add-ons and experiences</p>
         </div>
-        <button onClick={handleCreate} className="btn-primary flex items-center space-x-2">
+        <button onClick={handleCreate} className="btn-primary flex items-center justify-center space-x-2 w-full md:w-auto">
           <Plus size={20} />
           <span>Create Addon</span>
         </button>

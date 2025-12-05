@@ -84,7 +84,7 @@ export default function ItinerariesTable({
                     <DollarSign size={16} className="mr-2 text-primary-600" />
                     <span className="font-semibold">{formatPrice(itinerary.basePrice)}</span>
                   </div>
-                  {itinerary.packageIds.length > 0 && (
+                  {itinerary.packageIds && itinerary.packageIds.length > 0 && (
                     <div className="text-xs text-gray-500">
                       {itinerary.packageIds.length} package(s) linked
                     </div>

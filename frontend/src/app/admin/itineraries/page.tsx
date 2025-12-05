@@ -23,11 +23,18 @@ export default function ItinerariesPage() {
     setIsLoading(true)
     try {
       const response = await itinerariesAPI.getAll()
+      console.log('Admin Itineraries API response:', response)
       if (response.success) {
-        setItineraries(response.data)
+        setItineraries(response.data || [])
+      } else {
+        console.warn('No itineraries found or invalid response:', response)
+        setItineraries([])
       }
     } catch (error: any) {
-      toast.error(error.message || 'Failed to fetch itineraries')
+      console.error('Error fetching itineraries:', error)
+      console.error('Error details:', error.response?.data || error.message)
+      toast.error(error.response?.data?.error || error.message || 'Failed to fetch itineraries')
+      setItineraries([])
     } finally {
       setIsLoading(false)
     }
@@ -77,17 +84,17 @@ export default function ItinerariesPage() {
   )
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 md:space-y-6">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="flex items-center justify-between"
+        className="flex flex-col md:flex-row md:items-center md:justify-between gap-4"
       >
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Itineraries Management</h1>
-          <p className="text-gray-600">Create and manage travel itineraries</p>
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Itineraries Management</h1>
+          <p className="text-sm md:text-base text-gray-600">Create and manage travel itineraries</p>
         </div>
-        <button onClick={handleCreate} className="btn-primary flex items-center space-x-2">
+        <button onClick={handleCreate} className="btn-primary flex items-center justify-center space-x-2 w-full md:w-auto">
           <Plus size={20} />
           <span>Create Itinerary</span>
         </button>

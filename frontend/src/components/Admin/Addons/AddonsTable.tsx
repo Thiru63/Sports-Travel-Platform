@@ -85,7 +85,7 @@ export default function AddonsTable({
                     <DollarSign size={16} className="mr-2 text-primary-600" />
                     <span className="font-semibold">{formatPrice(addon.basePrice)}</span>
                   </div>
-                  {addon.packageIds.length > 0 && (
+                  {addon.packageIds && addon.packageIds.length > 0 && (
                     <div className="text-xs text-gray-500 mt-2">
                       {addon.packageIds.length} package(s) linked
                     </div>

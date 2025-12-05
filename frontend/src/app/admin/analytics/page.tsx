@@ -21,11 +21,46 @@ export default function AnalyticsPage() {
     setIsLoading(true)
     try {
       const response = await analyticsAPI.getSummary(days)
-      if (response.success) {
-        setAnalytics(response.data)
+      console.log('Analytics page response:', response)
+      if (response.success && response.data) {
+        // Map backend response to frontend format
+        const mappedData: AnalyticsSummary = {
+          totalLeads: response.data.overview?.leadConversions || 0,
+          leadsByStatus: [],
+          totalOrders: response.data.overview?.quoteGenerations || 0,
+          packageViews: response.data.overview?.pageViews || 0,
+          ctaClicks: 0, // Not in backend response
+          conversionRate: response.data.overview?.conversionRate || 0,
+          last7Days: response.data.dailyStats?.slice(-7).map((stat: any) => ({
+            date: stat.date,
+            leads: stat.leads || 0,
+          })) || [],
+        }
+        setAnalytics(mappedData)
+      } else {
+        // Set default empty data
+        setAnalytics({
+          totalLeads: 0,
+          leadsByStatus: [],
+          totalOrders: 0,
+          packageViews: 0,
+          ctaClicks: 0,
+          conversionRate: 0,
+          last7Days: [],
+        })
       }
     } catch (error) {
       console.error('Error fetching analytics:', error)
+      // Set default empty data on error
+      setAnalytics({
+        totalLeads: 0,
+        leadsByStatus: [],
+        totalOrders: 0,
+        packageViews: 0,
+        ctaClicks: 0,
+        conversionRate: 0,
+        last7Days: [],
+      })
     } finally {
       setIsLoading(false)
     }
@@ -53,26 +88,26 @@ export default function AnalyticsPage() {
     {
       icon: TrendingUp,
       label: 'Conversion Rate',
-      value: `${analytics?.conversionRate.toFixed(2) || 0}%`,
+      value: `${analytics?.conversionRate ? analytics.conversionRate.toFixed(2) : 0}%`,
       color: 'bg-orange-500',
     },
   ]
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 md:space-y-6">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="flex items-center justify-between"
+        className="flex flex-col md:flex-row md:items-center md:justify-between gap-4"
       >
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Analytics Dashboard</h1>
-          <p className="text-gray-600">Track your business performance and insights</p>
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Analytics Dashboard</h1>
+          <p className="text-sm md:text-base text-gray-600">Track your business performance and insights</p>
         </div>
         <select
           value={days}
           onChange={(e) => setDays(Number(e.target.value))}
-          className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+          className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 w-full md:w-auto"
         >
           <option value={7}>Last 7 days</option>
           <option value={30}>Last 30 days</option>

@@ -18,11 +18,46 @@ export default function AdminDashboard() {
     const fetchAnalytics = async () => {
       try {
         const response = await analyticsAPI.getSummary(7)
-        if (response.success) {
-          setAnalytics(response.data)
+        console.log('Dashboard analytics response:', response)
+        if (response.success && response.data) {
+          // Map backend response to frontend format
+          const mappedData: AnalyticsSummary = {
+            totalLeads: response.data.overview?.leadConversions || 0,
+            leadsByStatus: [],
+            totalOrders: response.data.overview?.quoteGenerations || 0,
+            packageViews: response.data.overview?.pageViews || 0,
+            ctaClicks: 0, // Not in backend response
+            conversionRate: response.data.overview?.conversionRate || 0,
+            last7Days: response.data.dailyStats?.slice(-7).map((stat: any) => ({
+              date: stat.date,
+              leads: stat.leads || 0,
+            })) || [],
+          }
+          setAnalytics(mappedData)
+        } else {
+          // Set default empty data
+          setAnalytics({
+            totalLeads: 0,
+            leadsByStatus: [],
+            totalOrders: 0,
+            packageViews: 0,
+            ctaClicks: 0,
+            conversionRate: 0,
+            last7Days: [],
+          })
         }
       } catch (error) {
         console.error('Error fetching analytics:', error)
+        // Set default empty data on error
+        setAnalytics({
+          totalLeads: 0,
+          leadsByStatus: [],
+          totalOrders: 0,
+          packageViews: 0,
+          ctaClicks: 0,
+          conversionRate: 0,
+          last7Days: [],
+        })
       } finally {
         setIsLoading(false)
       }
@@ -51,7 +86,7 @@ export default function AdminDashboard() {
     {
       icon: TrendingUp,
       label: 'Conversion Rate',
-      value: `${analytics?.conversionRate.toFixed(1) || 0}%`,
+      value: `${analytics?.conversionRate ? analytics.conversionRate.toFixed(1) : 0}%`,
       change: '-0.5%',
       changeType: 'negative' as const,
       color: 'bg-yellow-500',
@@ -67,14 +102,14 @@ export default function AdminDashboard() {
   ]
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 md:space-y-6">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="mb-8"
+        className="mb-6 md:mb-8"
       >
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Dashboard Overview</h1>
-        <p className="text-gray-600">Welcome back! Here's what's happening with your business.</p>
+        <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Dashboard Overview</h1>
+        <p className="text-sm md:text-base text-gray-600">Welcome back! Here's what's happening with your business.</p>
       </motion.div>
 
       {/* Stats Grid */}

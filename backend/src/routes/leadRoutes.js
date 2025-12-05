@@ -24,6 +24,8 @@ router.post(
     body('source').optional().trim(),
     body('campaign').optional().trim(),
     body('emailOptIn').optional().isBoolean(),
+    body('eventId').optional().isUUID().withMessage('Invalid event ID format'),
+    body('message').optional().trim(),
   ],
   leadController.createLead
 );

@@ -3,7 +3,7 @@ import axios from 'axios'
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'
 
 const api = axios.create({
-  baseURL: API_URL,
+  baseURL: `${API_URL}/api`,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -36,6 +36,18 @@ export interface Lead {
   aiConversations?: AiConversation[]
 }
 
+export interface Event {
+  id: string
+  title: string
+  description?: string
+  location: string
+  startDate: string
+  endDate: string
+  image?: string
+  category?: string
+  isActive: boolean
+}
+
 export interface Package {
   id: string
   title: string
@@ -47,6 +59,8 @@ export interface Package {
   eventDate?: string
   isFeatured: boolean
   category?: string
+  eventId?: string
+  event?: Event
 }
 
 export interface Itinerary {
@@ -56,7 +70,11 @@ export interface Itinerary {
   basePrice: number
   image?: string
   duration?: number
-  packageIds: string[]
+  packageIds?: string[]
+  dayNumber?: number
+  activities?: string[]
+  eventId?: string
+  event?: Event
 }
 
 export interface AddOn {
@@ -64,8 +82,35 @@ export interface AddOn {
   title: string
   description?: string
   basePrice: number
+  price: number
+  packageIds?: string[]
   image?: string
-  packageIds: string[]
+  eventId?: string
+  event?: Event
+  isOptional?: boolean
+}
+
+export interface Quote {
+  id: string
+  leadId: string
+  eventId: string
+  packageId: string
+  addonIds?: string[]
+  itinerariesIds?: string[]
+  travellers: number
+  travelDates: string[]
+  finalPrice: number
+  subtotal: number
+  addonsTotal: number
+  itinerariesTotal: number
+  status: string
+  expiryDate: string
+  notes?: string
+  currency: string
+  createdAt: string
+  lead?: Lead
+  event?: Event
+  package?: Package
 }
 
 export interface Order {
@@ -98,7 +143,7 @@ export interface AnalyticsSummary {
 // Auth API
 export const authAPI = {
   login: async (email: string, password: string) => {
-    const { data } = await api.post('/auth/login', { email, password })
+    const { data } = await api.post('/admin/login', { email, password })
     return data
   },
 }
@@ -113,8 +158,8 @@ export const leadsAPI = {
     const { data } = await api.get('/leads', { params })
     return data
   },
-  updateStatus: async (id: string, status: string) => {
-    const { data } = await api.put(`/leads/${id}/status`, { status })
+  updateStatus: async (id: string, status: string, notes?: string) => {
+    const { data } = await api.patch(`/leads/${id}/status`, { status, notes })
     return data
   },
   export: async (params?: { status?: string; search?: string }) => {
@@ -126,14 +171,30 @@ export const leadsAPI = {
   },
 }
 
+// Events API
+export const eventsAPI = {
+  getAll: async (params?: { active?: string; featured?: string; upcoming?: string }) => {
+    const { data } = await api.get('/events', { params })
+    return data
+  },
+  getById: async (id: string) => {
+    const { data } = await api.get(`/events/${id}`)
+    return data
+  },
+  getEventPackages: async (eventId: string, params?: { featured?: string }) => {
+    const { data } = await api.get(`/events/${eventId}/packages`, { params })
+    return data
+  },
+}
+
 // Packages API
 export const packagesAPI = {
-  getAll: async () => {
-    const { data } = await api.get('/packages')
+  getAll: async (params?: { eventId?: string; isFeatured?: string }) => {
+    const { data } = await api.get('/packages', { params })
     return data
   },
   getFeatured: async () => {
-    const { data } = await api.get('/packages/featured')
+    const { data } = await api.get('/packages', { params: { isFeatured: 'true' } })
     return data
   },
   create: async (packageData: Partial<Package>) => {
@@ -152,8 +213,8 @@ export const packagesAPI = {
 
 // Itineraries API
 export const itinerariesAPI = {
-  getAll: async () => {
-    const { data } = await api.get('/itineraries')
+  getAll: async (params?: { eventId?: string }) => {
+    const { data } = await api.get('/itineraries', { params })
     return data
   },
   create: async (itineraryData: Partial<Itinerary>) => {
@@ -172,8 +233,8 @@ export const itinerariesAPI = {
 
 // AddOns API
 export const addonsAPI = {
-  getAll: async () => {
-    const { data } = await api.get('/addons')
+  getAll: async (params?: { eventId?: string }) => {
+    const { data } = await api.get('/addons', { params })
     return data
   },
   create: async (addonData: Partial<AddOn>) => {
@@ -186,6 +247,43 @@ export const addonsAPI = {
   },
   delete: async (id: string) => {
     const { data } = await api.delete(`/addons/${id}`)
+    return data
+  },
+}
+
+// Quotes API
+export const quotesAPI = {
+  getAll: async (params?: { 
+    leadId?: string
+    eventId?: string
+    packageId?: string
+    status?: string
+    page?: number
+    limit?: number
+  }) => {
+    const { data } = await api.get('/quotes', { params })
+    return data
+  },
+  generate: async (quoteData: {
+    leadId: string
+    eventId: string
+    packageId: string
+    addonIds?: string[]
+    itinerariesIds?: string[]
+    travellers: number
+    travelDates: string[]
+    notes?: string
+    currency?: string
+  }) => {
+    const { data } = await api.post('/quotes/generate', quoteData)
+    return data
+  },
+  update: async (id: string, updateData: Partial<Quote>) => {
+    const { data } = await api.put(`/quotes/${id}`, updateData)
+    return data
+  },
+  delete: async (id: string) => {
+    const { data } = await api.delete(`/quotes/${id}`)
     return data
   },
 }
@@ -213,8 +311,14 @@ export const analyticsAPI = {
     packageId?: string
     itineraryId?: string
   }) => {
-    const { data } = await api.post('/analytics/events', eventData)
-    return data
+    try {
+      const { data } = await api.post('/analytics/track', eventData)
+      return data
+    } catch (error: any) {
+      // Silently fail analytics tracking to not break user experience
+      console.warn('Analytics tracking failed:', error)
+      return { success: false }
+    }
   },
   getSummary: async (days?: number) => {
     const { data } = await api.get('/analytics/summary', { params: { days } })
@@ -234,6 +338,24 @@ export const aiAPI = {
   },
   adminChat: async (message: string) => {
     const { data } = await api.post('/ai/admin/chat', { message })
+    return data
+  },
+  getChatHistory: async () => {
+    const { data } = await api.get('/ai/history')
+    return data
+  },
+  getLeadChatHistory: async (leadId: string) => {
+    const { data } = await api.get(`/ai/history/lead/${leadId}`)
+    return data
+  },
+  getAllConversations: async (params?: {
+    page?: number
+    limit?: number
+    leadId?: string
+    startDate?: string
+    endDate?: string
+  }) => {
+    const { data } = await api.get('/ai/conversations', { params })
     return data
   },
 }

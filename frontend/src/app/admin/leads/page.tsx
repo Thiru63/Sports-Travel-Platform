@@ -29,12 +29,21 @@ export default function LeadsPage() {
         page: currentPage,
         limit: 10,
       })
+      console.log('Admin Leads API response:', response)
       if (response.success) {
-        setLeads(response.data)
-        setTotalPages(response.pagination.pages)
+        setLeads(response.data || [])
+        setTotalPages(response.pagination?.pages || 1)
+      } else {
+        console.warn('No leads found or invalid response:', response)
+        setLeads([])
+        setTotalPages(1)
       }
     } catch (error: any) {
-      toast.error(error.message || 'Failed to fetch leads')
+      console.error('Error fetching leads:', error)
+      console.error('Error details:', error.response?.data || error.message)
+      toast.error(error.response?.data?.error || error.message || 'Failed to fetch leads')
+      setLeads([])
+      setTotalPages(1)
     } finally {
       setIsLoading(false)
     }
@@ -71,19 +80,19 @@ export default function LeadsPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 md:space-y-6">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="flex items-center justify-between"
+        className="flex flex-col md:flex-row md:items-center md:justify-between gap-4"
       >
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Leads Management</h1>
-          <p className="text-gray-600">View and manage all your leads</p>
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Leads Management</h1>
+          <p className="text-sm md:text-base text-gray-600">View and manage all your leads</p>
         </div>
         <button
           onClick={handleExport}
-          className="btn-secondary flex items-center space-x-2"
+          className="btn-secondary flex items-center justify-center space-x-2 w-full md:w-auto"
         >
           <Download size={20} />
           <span>Export CSV</span>

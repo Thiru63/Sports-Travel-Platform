@@ -23,11 +23,18 @@ export default function PackagesPage() {
     setIsLoading(true)
     try {
       const response = await packagesAPI.getAll()
+      console.log('Admin Packages API response:', response)
       if (response.success) {
-        setPackages(response.data)
+        setPackages(response.data || [])
+      } else {
+        console.warn('No packages found or invalid response:', response)
+        setPackages([])
       }
     } catch (error: any) {
-      toast.error(error.message || 'Failed to fetch packages')
+      console.error('Error fetching packages:', error)
+      console.error('Error details:', error.response?.data || error.message)
+      toast.error(error.response?.data?.error || error.message || 'Failed to fetch packages')
+      setPackages([])
     } finally {
       setIsLoading(false)
     }
@@ -78,17 +85,17 @@ export default function PackagesPage() {
   )
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 md:space-y-6">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="flex items-center justify-between"
+        className="flex flex-col md:flex-row md:items-center md:justify-between gap-4"
       >
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Packages Management</h1>
-          <p className="text-gray-600">Create and manage sports travel packages</p>
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Packages Management</h1>
+          <p className="text-sm md:text-base text-gray-600">Create and manage sports travel packages</p>
         </div>
-        <button onClick={handleCreate} className="btn-primary flex items-center space-x-2">
+        <button onClick={handleCreate} className="btn-primary flex items-center justify-center space-x-2 w-full md:w-auto">
           <Plus size={20} />
           <span>Create Package</span>
         </button>

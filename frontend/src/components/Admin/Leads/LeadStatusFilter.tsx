@@ -7,12 +7,12 @@ interface LeadStatusFilterProps {
 
 export default function LeadStatusFilter({ value, onChange }: LeadStatusFilterProps) {
   const statuses = [
-    { value: 'ALL', label: 'All Statuses' },
     { value: 'NEW', label: 'New' },
     { value: 'CONTACTED', label: 'Contacted' },
-    { value: 'CONVERTED', label: 'Converted' },
-    { value: 'FOLLOW_UP', label: 'Follow Up' },
-    { value: 'NOT_INTERESTED', label: 'Not Interested' },
+    { value: 'QUOTE_SENT', label: 'Quote Sent' },
+    { value: 'INTERESTED', label: 'Interested' },
+    { value: 'CLOSED_WON', label: 'Closed Won' },
+    { value: 'CLOSED_LOST', label: 'Closed Lost' },
   ]
 
   return (

@@ -21,10 +21,24 @@ interface AnalyticsChartProps {
 }
 
 export default function AnalyticsChart({ data }: AnalyticsChartProps) {
-  const chartData = data.map((item) => ({
-    date: new Date(item.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
-    leads: item.leads,
-  }))
+  const chartData = data && data.length > 0 
+    ? data.map((item) => ({
+        date: new Date(item.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+        leads: item.leads || 0,
+      }))
+    : []
+
+  // Generate default data if empty
+  const defaultData = chartData.length === 0 
+    ? Array.from({ length: 7 }, (_, i) => {
+        const date = new Date()
+        date.setDate(date.getDate() - (6 - i))
+        return {
+          date: date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+          leads: 0,
+        }
+      })
+    : chartData
 
   return (
     <motion.div
@@ -33,8 +47,9 @@ export default function AnalyticsChart({ data }: AnalyticsChartProps) {
       className="bg-white rounded-xl p-6 shadow-lg"
     >
       <h3 className="text-xl font-bold text-gray-900 mb-6">Last 7 Days Trend</h3>
-      <ResponsiveContainer width="100%" height={300}>
-        <AreaChart data={chartData}>
+      {defaultData.length > 0 ? (
+        <ResponsiveContainer width="100%" height={300}>
+          <AreaChart data={defaultData}>
           <defs>
             <linearGradient id="colorLeads" x1="0" y1="0" x2="0" y2="1">
               <stop offset="5%" stopColor="#0ea5e9" stopOpacity={0.3} />
@@ -59,8 +74,13 @@ export default function AnalyticsChart({ data }: AnalyticsChartProps) {
             fillOpacity={1}
             fill="url(#colorLeads)"
           />
-        </AreaChart>
-      </ResponsiveContainer>
+          </AreaChart>
+        </ResponsiveContainer>
+      ) : (
+        <div className="h-[300px] flex items-center justify-center text-gray-500">
+          <p>No data available</p>
+        </div>
+      )}
     </motion.div>
   )
 }
