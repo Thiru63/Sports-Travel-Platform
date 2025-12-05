@@ -27,7 +27,7 @@ class EmailService {
       };
       
       // In production, send actual email
-      if (config.nodeEnv === 'test') {
+      if (config.nodeEnv === 'production'|| config.nodeEnv === 'test') {
         const info = await this.transporter.sendMail(mailOptions);
         logger.info(`Quote email sent to ${to}: ${info.messageId}`);
         return true;
@@ -140,7 +140,7 @@ class EmailService {
     };
 
     // Send email only in production/test (same logic as quote email)
-    if (config.nodeEnv === 'test') {
+    if (config.nodeEnv === 'test'|| config.nodeEnv === 'production') {
       const info = await this.transporter.sendMail(mailOptions);
       logger.info(`Welcome email sent to ${to}: ${info.messageId}`);
       return true;
