@@ -31,8 +31,8 @@ This project is built **exactly how a founding engineer** would build the first 
 | 🌐 Landing Page (User) | `https://sports-travel-platform-app.vercel.app`|
 | 🔐 Admin Panel         |`https://sports-travel-platform-app.vercel.app/admin`                   |                                                 |
 | 📦 API (Render)        | `https://sports-travel-platform.onrender.com`                     |                                                |
-| 📄 GitHub Repo         | `https://github.com/Thiru63/Sports-Travel-Platform/`                        |                                                  |
-
+| 📄 GitHub Repo         | `https://github.com/Thiru63/Sports-Travel-Platform/`|                        |                                                  |
+| Postman API             | [Click Here](https://www.postman.com/navigation-pilot-96856171/workspace/thiru-public/collection/26555865-90ff43ae-67c0-40db-b0f3-e795c6608999?action=share&source=copy-link&creator=26555865)  
 ---
 
 # 🎨 **3. Features**
